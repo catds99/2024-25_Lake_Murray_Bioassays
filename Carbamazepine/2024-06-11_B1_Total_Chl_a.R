@@ -15,7 +15,7 @@ library(agricolae)
 
 #import data:
 
-Carb_B1_TCA = read_excel("Carbamazepine/Data/HPLC.xlsx", sheet = 1)
+Carb_B1_TCA = read_excel("Carbamazepine/Data/HPLC_C.xlsx", sheet = 1)
 
 summary(Carb_B1_TCA)
 glimpse(Carb_B1_TCA)
@@ -25,8 +25,8 @@ glimpse(Carb_B1_TCA)
 #################### Boxplot to visualize
 
 Carb_B1_TCA$Sample <- factor(Carb_B1_TCA$Sample,
-                                levels = c("T0", "Control", "Acetone", "10", "25", "50", "75", "100", "125"),
-                                labels = c("Time Zero", "Control", "Acetone Control", "10% Max", "25% Max", "50% Max", "75% Max", "100% Max", "125% Max"))
+                             levels = c("T0", "Control", "Acetone", "ten", "twentyfive", "fifty", "seventyfive", "hundred", "hundredtwentyfive"),
+                             labels = c("Time Zero", "Control", "Acetone Control", "10% Max", "25% Max", "50% Max", "75% Max", "100% Max", "125% Max"))
 
 B1_TCA_boxplot = ggplot() +
   geom_boxplot(aes(x = Sample, 
@@ -52,7 +52,7 @@ print(treatment_group_mean_tca)
 #################### boxplot to visualize
 
 Carb_B1_TCA$Sample <- factor(Carb_B1_TCA$Sample,
-                             levels = c("T0", "Control", "Acetone", "10", "25", "50", "75", "100", "125"),
+                             levels = c("T0", "Control", "Acetone", "ten", "twentyfive", "fifty", "seventyfive", "hundred", "hundredtwentyfive"),
                              labels = c("Time Zero", "Control", "Acetone Control", "10% Max", "25% Max", "50% Max", "75% Max", "100% Max", "125% Max"))
 
 B1_PC_boxplot = ggplot() +
@@ -77,7 +77,7 @@ print(treatment_group_mean_pc)
 #################### barchart
 
 Carb_B1_TCA$Sample <- factor(Carb_B1_TCA$Sample,
-                             levels = c("T0", "Control", "Acetone", "10", "25", "50", "75", "100", "125"),
+                             levels = c("T0", "Control", "Acetone", "ten", "twentyfive", "fifty", "seventyfive", "hundred", "hundredtwentyfive"),
                              labels = c("Time Zero", "Control", "Acetone Control", "10% Max", "25% Max", "50% Max", "75% Max", "100% Max", "125% Max"))
 
 B1_PC_plot = ggplot() +
@@ -106,7 +106,6 @@ print(REGW_tca_pc)
 #125% max > Time Zero
 #25% max > Control
 #25% max > Time Zero
-#50% max > Control
 #50% max > Time Zero
 #75% max > Time Zero
 #Acetone Control > Time Zero
