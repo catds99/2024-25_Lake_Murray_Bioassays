@@ -49,7 +49,7 @@ summary(B1.aov)
 # F = 377.3, p = <2e-16, df = 8, 36
 
 
-REGW = REGW.test(y = B1.aov, "Treatment", alpha = 0.05, group = TRUE, main = NULL, console = FALSE)
+REGW = REGW.test(y = B1.aov, "Treatment", alpha = 0.05, group = FALSE, main = NULL, console = FALSE)
 #to get groups of treatments, use group = TRUE, for comparisons and p-values of all treatments use group = FALSE
 print(REGW)
 #10% max > Time Zero
@@ -82,3 +82,16 @@ library(onewaytests)
 
 welch_test <- welch.test(FvFm ~ Treatment, data = Dic_B1_PAM)
 print(welch_test)
+
+#################### ANOVA
+
+#### One-way ANOVA, parametric
+
+B1.aov = aov(FvFm ~ Treatment, data = Dic_B1_PAM)
+
+summary(B1.aov)
+
+
+REGW = REGW.test(y = B1.aov, "Treatment", alpha = 0.05, group = FALSE, main = NULL, console = FALSE)
+#to get groups of treatments, use group = TRUE, for comparisons and p-values of all treatments use group = FALSE
+print(REGW)

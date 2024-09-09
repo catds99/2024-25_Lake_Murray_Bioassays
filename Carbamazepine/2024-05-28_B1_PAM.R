@@ -45,8 +45,6 @@ B1.aov = aov(FvFm ~ Treatment, data = Carb_B1_PAM)
 
 summary(B1.aov)
 
-# No difference between treatment groups, F = 0.65, p = 0.712, df = 7
-
 
 REGW = REGW.test(y = B1.aov, "Treatment", alpha = 0.05, group = FALSE, main = NULL, console = FALSE)
 #to get groups of treatments, use group = TRUE, for comparisons and p-values of all treatments use group = FALSE
@@ -54,7 +52,6 @@ print(REGW)
 #10% max > Time Zero
 #100% max > Time Zero
 #125% max > Time Zero
-#25% max > Control
 #25% max > Time Zero
 #50% max > Time Zero
 #75% max > Time Zero
