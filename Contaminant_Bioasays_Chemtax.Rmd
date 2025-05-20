@@ -1,0 +1,55 @@
+---
+title: "Contaminant_Bioassays_Chemtax"
+author: "C Schlenker"
+date: "2025-02-28"
+output: html_document
+---
+
+```{r}
+library(tidyverse)
+library(ggplot2)
+library(readxl)
+```
+
+```{r}
+chemtax = read_excel("2024_Bioassay_pigment_data.xlsx", sheet = 4)
+
+print(chemtax)
+```
+```{r}
+chemtax$Group <- factor(chemtax$Group,
+                           levels = c("ALLChla", "Cyanobacteria", "GreenAlgae", "Cryptophytes", "Diatoms", "Dinoflagellates", "Haptophytes"),
+                           labels = c("Total Chl a", "Cyanobacteria", "Green Algae", "Cryptophytes", "Diatoms", "Dinoflagellates", "Haptophytes"))
+
+group_colors = c("Cyanobacteria" = "aquamarine3", "Cryptophytes" = "lightpink3", "Diatoms" = "lightgoldenrod", "Dinoflagellates" = "darkgoldenrod", "Green Algae" = "chartreuse4", "Haptophytes" = "burlywood4")
+```
+
+
+```{r}
+carbamazepine = ggplot(chemtax, aes(fill = Group, y = Carbamazepine, x = fct_relevel(Treatment, "T0" , "Control", "Solvent", "A", "B", "C", "D", "E", "F"))) +
+  geom_bar(position = "stack", stat = "identity") +
+  scale_fill_manual(values = group_colors) +
+  ylab(expression(paste("Biomass \u03BCg", l^-1))) + 
+  xlab("Treatment") + 
+  labs(fill = 'Group') +
+  scale_x_discrete(labels = c("T0" = "Time Zero", "Control" = "Control", "Solvent" = "Solvent Control", "A" = "10%", "B" = "25%", "C" = "50%", "D" = "75%", "E" = "100%", "F" = "125%")) +
+  theme_classic(base_size = 30) +
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
+carbamazepine
+```
+
+
+```{r}
+
+```
+
+
+```{r}
+
+```
+
+
+```{r}
+
+```
+

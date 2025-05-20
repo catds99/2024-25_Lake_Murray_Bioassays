@@ -1,0 +1,150 @@
+
+
+################################# Carbamazepine
+
+
+kruskal.test(Cyanobacteria_pc ~ Treatment, data = carb_pc)
+
+# Kruskal-Wallis rank sum test
+
+# data:  Cyanobacteria_pc by Treatment
+# Kruskal-Wallis chi-squared = 11.018, df = 5, p-value = 0.05102
+
+pairwise.wilcox.test(carb_pc$Cyanobacteria_pc, carb_pc$Treatment,
+                     p.adjust.method = "BH")
+
+
+kruskal.test(GreenAlgae_pc ~ Treatment, data = carb_pc)
+
+# Kruskal-Wallis rank sum test
+
+# data:  GreenAlgae_pc by Treatment
+# Kruskal-Wallis chi-squared = 7.5135, df = 5, p-value = 0.1852
+
+pairwise.wilcox.test(carb_pc$GreenAlgae_pc, carb_pc$Treatment,
+                     p.adjust.method = "BH")
+
+
+kruskal.test(Diatoms_pc ~ Treatment, data = carb_pc)
+
+# Kruskal-Wallis rank sum test
+
+# data:  Diatoms_pc by Treatment
+# Kruskal-Wallis chi-squared = 8.6181, df = 5, p-value = 0.1253
+
+pairwise.wilcox.test(carb_pc$Diatoms_pc, carb_pc$Treatment,
+                     p.adjust.method = "BH")
+
+kruskal.test(Dinoflagellates_pc ~ Treatment, data = carb_pc)
+
+# Kruskal-Wallis rank sum test
+
+# data:  Dinoflagellates_pc by Treatment
+# Kruskal-Wallis chi-squared = 10.554, df = 5, p-value = 0.06099
+
+pairwise.wilcox.test(carb_pc$Dinoflagellates_pc, carb_pc$Treatment,
+                     p.adjust.method = "BH")
+
+
+kruskal.test(Haptophytes_pc ~ Treatment, data = carb_pc)
+
+# Kruskal-Wallis rank sum test
+
+# data:  Haptophytes_pc by Treatment
+# Kruskal-Wallis chi-squared = 18.667, df = 5, p-value = 0.002217
+
+pairwise.wilcox.test(carb_pc$Haptophytes_pc, carb_pc$Treatment,
+                     p.adjust.method = "BH")
+
+
+
+
+
+
+
+
+
+
+
+
+################################# diclofenac
+
+
+kruskal.test(Cyanobacteria_pc ~ Treatment, data = dic_pc)
+
+# Kruskal-Wallis rank sum test
+
+# data:  Cyanobacteria_pc by Treatment
+# Kruskal-Wallis chi-squared = 3.8852, df = 5, p-value = 0.5661
+
+pairwise.wilcox.test(dic_pc$Cyanobacteria_pc, dic_pc$Treatment,
+                     p.adjust.method = "BH")
+
+
+kruskal.test(GreenAlgae_pc ~ Treatment, data = dic_pc)
+
+# Kruskal-Wallis rank sum test
+
+# data:  GreenAlgae_pc by Treatment
+# Kruskal-Wallis chi-squared = 5.0361, df = 5, p-value = 0.4115
+
+pairwise.wilcox.test(dic_pc$GreenAlgae_pc, dic_pc$Treatment,
+                     p.adjust.method = "BH")
+
+
+kruskal.test(Diatoms_pc ~ Treatment, data = dic_pc)
+
+# Kruskal-Wallis rank sum test
+
+# data:  Diatoms_pc by Treatment
+# Kruskal-Wallis chi-squared = 2.9303, df = 5, p-value = 0.7107
+
+pairwise.wilcox.test(dic_pc$Diatoms_pc, dic_pc$Treatment,
+                     p.adjust.method = "BH")
+
+kruskal.test(Dinoflagellates_pc ~ Treatment, data = dic_pc)
+
+# Kruskal-Wallis rank sum test
+
+# data:  Dinoflagellates_pc by Treatment
+# Kruskal-Wallis chi-squared = 14.688, df = 5, p-value = 0.01178
+
+pairwise.wilcox.test(dic_pc$Dinoflagellates_pc, dic_pc$Treatment,
+                     p.adjust.method = "BH")
+
+# Pairwise comparisons using Wilcoxon rank sum exact test 
+
+# data:  dic_pc$Dinoflagellates_pc and dic_pc$Treatment 
+
+#           10% Max 25% Max 50% Max 75% Max 100% Max
+#  25% Max  1.000   -       -       -       -       
+#  50% Max  0.204   0.485   -       -       -       
+#  75% Max  0.060   0.079   0.417   -       -       
+#  100% Max 0.060   0.079   0.422   0.901   -       
+#  125% Max 0.079   0.079   0.485   0.422   0.422   
+
+# P value adjustment method: BH 
+
+
+kruskal.test(Haptophytes_pc ~ Treatment, data = dic_pc)
+
+# 	Kruskal-Wallis rank sum test
+
+# data:  Haptophytes_pc by Treatment
+# Kruskal-Wallis chi-squared = 17.408, df = 5, p-value = 0.003788
+
+pairwise.wilcox.test(dic_pc$Haptophytes_pc, dic_pc$Treatment,
+                     p.adjust.method = "BH")
+
+# Pairwise comparisons using Wilcoxon rank sum exact test 
+
+# data:  dic_pc$Haptophytes_pc and dic_pc$Treatment 
+
+#           10% Max 25% Max 50% Max 75% Max 100% Max
+#  25% Max  0.226   -       -       -       -       
+#  50% Max  0.422   0.690   -       -       -       
+#  75% Max  0.048   0.048   0.048   -       -       
+#  100% Max 0.159   0.048   0.048   0.690   -       
+#  125% Max 0.159   0.079   0.119   0.632   0.526   
+
+# P value adjustment method: BH 

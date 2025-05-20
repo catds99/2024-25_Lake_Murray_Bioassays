@@ -1,6 +1,6 @@
 #2024-09-09
 #CDS
-#PAM data from 6ppd-q Bioassay 1 (2024/08/21-24)
+#total chl a data from all bioassays
 
 library(tidyverse)
 library(ggpubr)

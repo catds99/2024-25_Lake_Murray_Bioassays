@@ -12,6 +12,8 @@ library(rstatix)
 library(ggpubr)
 library(broom)
 
+getwd()
+
 #import data:
 
 Carb_B1_PAM = read_excel("Carbamazepine/Data/PAM_C.xlsx", sheet = 1)

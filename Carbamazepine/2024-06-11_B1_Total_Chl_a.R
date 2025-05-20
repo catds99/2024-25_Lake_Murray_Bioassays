@@ -24,9 +24,13 @@ glimpse(Carb_B1_TCA)
 
 #################### Boxplot to visualize
 
+# set order of levels and rename:
+
 Carb_B1_TCA$Sample <- factor(Carb_B1_TCA$Sample,
                              levels = c("T0", "Control", "Acetone", "ten", "twentyfive", "fifty", "seventyfive", "hundred", "hundredtwentyfive"),
                              labels = c("Time Zero", "Control", "Acetone Control", "10% Max", "25% Max", "50% Max", "75% Max", "100% Max", "125% Max"))
+
+# boxplot:
 
 B1_TCA_boxplot = ggplot() +
   geom_boxplot(aes(x = Sample, 
