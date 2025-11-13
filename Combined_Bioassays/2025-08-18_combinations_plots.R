@@ -270,6 +270,7 @@ delta_carb = ggplot() +
                                ymax = avg_delta_C+sd_delta_C)) +
   xlab("Treatment") +
   ylab("Delta RFU (72h - T0)") +
+  ggtitle("Carbamazepine") +
   theme_classic(base_size = 20) +
   scale_y_continuous(limits = c(-3.5, 8.5)) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
@@ -287,6 +288,7 @@ delta_dic = ggplot() +
                                   ymax = avg_delta_D+sd_delta_D)) +
   xlab("Treatment") +
   ylab("Delta RFU (72h - T0)") +
+  ggtitle("Diclofenac") +
   theme_classic(base_size = 20) +
   scale_y_continuous(limits = c(-3.5, 8.5)) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
@@ -305,6 +307,7 @@ delta_PFOS = ggplot() +
                                   ymax = avg_delta_P+sd_delta_P)) +
   xlab("Treatment") +
   ylab("Delta RFU (72h - T0)") +
+  ggtitle("PFOS") +
   theme_classic(base_size = 20) +
   scale_y_continuous(limits = c(-3.5, 8.5)) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
@@ -323,6 +326,7 @@ delta_Q = ggplot() +
                                   ymax = avg_delta_Q+sd_delta_Q)) +
   xlab("Treatment") +
   ylab("Delta RFU (72h - T0)") +
+  ggtitle("6ppd-quinone") +
   theme_classic(base_size = 20) +
   scale_y_continuous(limits = c(-3.5, 8.5)) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
@@ -331,11 +335,18 @@ ggsave(delta_Q, filename = "Combined_Bioassays/Figures/delta_RFU/delta_Q.png",
 
 
 combined_delta = ggarrange(delta_carb + rremove("ylab") + rremove("xlab"), delta_dic + rremove("ylab") + rremove("xlab"), delta_PFOS + rremove("ylab") + rremove("xlab"), delta_Q + rremove("ylab") + rremove("xlab"),
-                             labels = c("A", "B", "C", "D"),
+                             labels = c("A", "Diclofenac", "PFOS", "6ppd-quinone"),
                              label.x = 0.05,
                              label.y = 1,
                              nrow = 2,
                              ncol = 2)
+
+combined_delta = ggarrange(delta_carb + rremove("xlab"), delta_dic + rremove("ylab") + rremove("xlab"), delta_PFOS, delta_Q + rremove("ylab"),
+                           #labels = c("A", "Diclofenac", "PFOS", "6ppd-quinone"),
+                           label.x = 0.05,
+                           label.y = 1,
+                           nrow = 2,
+                           ncol = 2)
 
 
 

@@ -15,6 +15,7 @@ library(agricolae)
 library(vegan)
 library(grid)
 library(gtable)
+library(patchwork)
 
 ############################################## import data
 
@@ -312,6 +313,43 @@ g$layout$clip[g$layout$name == "panel"] = "off"
 grid.draw(g)
 
 
+
+
+
+set.seed(34)
+carb_nmds_2b = metaMDS(m_carb_x_2, distance = "euc")
+carb_nmds_2b
+
+carb_data_scores_b = as.data.frame(scores(carb_nmds_2b)$sites)
+carb_data_scores_b$Treatment = carb_x$Treatment
+head(carb_data_scores_b)
+
+carb_data_scores_b$Bioassay <- 'Carbamazepine'
+
+
+xx_c_b = ggplot(carb_data_scores_b, aes(x = NMDS1, y = NMDS2)) + 
+  geom_point(size = 4, aes(colour = Treatment)) + 
+  theme(axis.text.y = element_text(colour = "black", size = 12, face = "bold"),
+        axis.text.x = element_text(colour = "black", face = "bold", size = 12), 
+        legend.text = element_text(size = 12, face ="bold", colour ="black"), 
+        legend.position = "right", axis.title.y = element_text(face = "bold", size = 14), 
+        axis.title.x = element_text(face = "bold", size = 14, colour = "black"), 
+        legend.title = element_text(size = 14, colour = "black", face = "bold"), 
+        panel.background = element_blank(), 
+        legend.key=element_blank()) + 
+  annotate("text", x = Inf, y = -0.35, label = "Stress = 0.08", hjust = -.5, size = 5) +
+  labs(x = "NMDS1", color = "Treatment", y = "NMDS2")  + 
+  scale_colour_manual(values = c("black", "lightgrey", "darkgrey", "firebrick2", "darkorange", "gold", "forestgreen", "deepskyblue2", "orchid2")) +
+  theme_classic(base_size = 20)
+
+g2 = ggplotGrob(xx_c_b)
+g2$layout$clip[g2$layout$name == "panel"] = "off"
+grid.draw(g2)
+
+stress_c = stressplot(carb_nmds_2b)
+
+
+
 ################################# diclofenac
 
 
@@ -343,6 +381,47 @@ gd = ggplotGrob(xx_d)
 gd$layout$clip[gd$layout$name == "panel"] = "off"
 grid.draw(gd)
 
+set.seed(67)
+dic_nmds_2b = metaMDS(m_dic_x_2, distance = "euc")
+dic_nmds_2b
+
+dic_data_scores_b = as.data.frame(scores(dic_nmds_2b)$sites)
+dic_data_scores_b$Treatment = dic_x$Treatment
+head(dic_data_scores_b)
+
+dic_data_scores_b$Bioassay <- 'Diclofenac'
+
+xx_d_b = ggplot(dic_data_scores_b, aes(x = NMDS1, y = NMDS2)) + 
+  geom_point(size = 4, aes(colour = Treatment)) + 
+  labs(x = "NMDS1", color = "Treatment", y = "NMDS2")  + 
+  scale_colour_manual(values = c("black", "lightgrey", "darkgrey", "firebrick2", "darkorange", "gold", "forestgreen", "deepskyblue2", "orchid2")) +
+  theme_classic(base_size = 20) +
+  annotate("text", x = Inf, y = -1.8e-4, label = "Stress = near zero", hjust = -.25, vjust = -.25, size = 5) 
+
+gd2 = ggplotGrob(xx_d_b)
+gd2$layout$clip[gd2$layout$name == "panel"] = "off"
+grid.draw(gd2)
+
+stress_d = stressplot(dic_nmds_2b)
+
+
+stress_vals_d <- data.frame(
+  k = 1:6,
+  stress = sapply(1:6, function(k) {
+    m <- metaMDS(m_dic_x_2, distance = "euc", k = k, trymax = 50, trace = FALSE)
+    m$stress
+  })
+)
+
+# Plot it
+library(ggplot2)
+ggplot(stress_vals_d, aes(x = k, y = stress)) +
+  geom_point(size = 3) +
+  geom_line() +
+  labs(x = "Number of Dimensions (k)",
+       y = "Stress",
+       title = "Stress vs. Dimensions (NMDS Scree Plot)") +
+  theme_classic(base_size = 16)
 
 
 ################################# pfos
@@ -385,6 +464,37 @@ gp = ggplotGrob(xx_p)
 gp$layout$clip[gp$layout$name == "panel"] = "off"
 grid.draw(gp)
 
+
+set.seed(58)
+pfos_nmds_2b = metaMDS(m_pfos_x_2, distance = "euc")
+pfos_nmds_2b
+
+pfos_data_scores_b = as.data.frame(scores(pfos_nmds_2b)$sites)
+pfos_data_scores_b$Treatment = pfos_x$Treatment
+head(pfos_data_scores_b)
+
+pfos_data_scores_b$Bioassay <- 'PFOS'
+
+xx_p_b = ggplot(pfos_data_scores_b, aes(x = NMDS1, y = NMDS2)) + 
+  geom_point(size = 4, aes(colour = Treatment)) + 
+  theme(axis.text.y = element_text(colour = "black", size = 12, face = "bold"),
+        axis.text.x = element_text(colour = "black", face = "bold", size = 12), 
+        legend.text = element_text(size = 12, face ="bold", colour ="black"), 
+        legend.position = "right", axis.title.y = element_text(face = "bold", size = 14), 
+        axis.title.x = element_text(face = "bold", size = 14, colour = "black"), 
+        legend.title = element_text(size = 14, colour = "black", face = "bold"), 
+        panel.background = element_blank(), 
+        legend.key=element_blank()) + 
+  annotate("text", x = Inf, y = -0.125, label = "Stress = 0.1", hjust = -.6, size = 5) +
+  labs(x = "NMDS1", color = "Treatment", y = "NMDS2")  + 
+  scale_colour_manual(values = c("black", "lightgrey", "darkgrey", "firebrick2", "darkorange", "gold", "forestgreen", "deepskyblue2", "orchid2")) +
+  theme_classic(base_size = 20)
+
+gp2 = ggplotGrob(xx_p_b)
+gp2$layout$clip[gp2$layout$name == "panel"] = "off"
+grid.draw(gp2)
+
+stress_p = stressplot(pfos_nmds_2b)
 
 
 ################################# 6ppd-q
@@ -429,6 +539,42 @@ grid.draw(gq)
 
 
 
+
+set.seed(69)
+quin_nmds_2b = metaMDS(m_quin_x_2, distance = "bray")
+quin_nmds_2b
+
+quin_data_scores_b = as.data.frame(scores(quin_nmds_2b)$sites)
+quin_data_scores_b$Treatment = quin_x$Treatment
+head(quin_data_scores_b)
+
+quin_data_scores_b$Bioassay <- '6ppd-q'
+
+xx_q_b = ggplot(quin_data_scores_b, aes(x = NMDS1, y = NMDS2)) + 
+  geom_point(size = 4, aes(colour = Treatment)) + 
+  theme(axis.text.y = element_text(colour = "black", size = 12, face = "bold"),
+        axis.text.x = element_text(colour = "black", face = "bold", size = 12), 
+        legend.text = element_text(size = 12, face ="bold", colour ="black"), 
+        legend.position = "right", axis.title.y = element_text(face = "bold", size = 14), 
+        axis.title.x = element_text(face = "bold", size = 14, colour = "black"), 
+        legend.title = element_text(size = 14, colour = "black", face = "bold"), 
+        panel.background = element_blank(), 
+        legend.key=element_blank()) + 
+  annotate("text", x = Inf, y = -0.14, label = "Stress = 0.03", hjust = -.6, size = 5) +
+  labs(x = "NMDS1", color = "Treatment", y = "NMDS2")  + 
+  scale_colour_manual(values = c("black", "lightgrey", "darkgrey", "firebrick2", "darkorange", "gold", "forestgreen", "deepskyblue2", "orchid2")) +
+  theme_classic(base_size = 20)
+
+gq2 = ggplotGrob(xx_q_b)
+gq2$layout$clip[gq2$layout$name == "panel"] = "off"
+grid.draw(gq2)
+
+stress_q = stressplot(quin_nmds_2b)
+
+
+
+
+
 combined = rbind(carb_data_scores, dic_data_scores, pfos_data_scores, quin_data_scores)
 
 combined$Bioassay <- factor(combined$Bioassay,
@@ -455,6 +601,35 @@ ggsave(all, filename = "All_Bioassays/Figures/biomass_nmds_combined.png",
 
 
 
+
+
+
+combined_2 = rbind(carb_data_scores_b, dic_data_scores_b, pfos_data_scores_b, quin_data_scores_b)
+
+combined_2$Bioassay <- factor(combined_2$Bioassay,
+                            levels = c("Carbamazepine", "Diclofenac", "PFOS", "6ppd-q"))
+
+all_b = ggplot(combined_2, aes(x = NMDS1, y = NMDS2)) + 
+  geom_point(size = 4, aes(colour = Treatment)) + 
+  facet_wrap(~ Bioassay) +
+  theme(axis.text.y = element_text(colour = "black", size = 12, face = "bold"),
+        axis.text.x = element_text(colour = "black", face = "bold", size = 12), 
+        legend.text = element_text(size = 12, face ="bold", colour ="black"), 
+        legend.position = "right", axis.title.y = element_text(face = "bold", size = 14), 
+        axis.title.x = element_text(face = "bold", size = 14, colour = "black"), 
+        legend.title = element_text(size = 14, colour = "black", face = "bold"), 
+        panel.background = element_blank(), 
+        legend.key=element_blank()) + 
+  annotate("text", x = Inf, y = -0.14, label = "Stress = 0.03", hjust = -.6, size = 5) +
+  labs(x = "NMDS1", color = "Treatment", y = "NMDS2")  + 
+  scale_colour_manual(values = c("black", "lightgrey", "darkgrey", "firebrick2", "darkorange", "gold", "forestgreen", "deepskyblue2", "orchid2")) +
+  theme_classic(base_size = 30)
+
+ggsave(all_b, filename = "All_Bioassays/Figures/biomass_nmds_combined_b.png",
+       device = "png", height = 12, width = 17)
+
+
+(stress_c | stress_d) / (stress_p | stress_q) 
 
 
 ############################################## Kruskal Wallis based on percent change

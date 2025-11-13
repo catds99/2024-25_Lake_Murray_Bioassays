@@ -559,3 +559,44 @@ View(pairwise_CI2)
 as.data.frame(pairwise_CI2)
 print(pairwise_CI2)
 options(max.print = 2000)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+################################################ Two way anova for bioassays to look at treatment group and nutrients
+
+carb = data %>%
+  filter(Bioassay == "1")
+
+dic = data %>%
+  filter(Bioassay == "2")
+
+PFOS = data %>%
+  filter(Bioassay == "3")
+
+quinone = data %>%
+  filter(Bioassay == "4")
+
+
+
+carb_two_way <- aov(delta_RFU ~ Group * Nutrients, data = carb)
+summary(carb_two_way)
+
+dic_two_way <- aov(delta_RFU ~ Group * Nutrients, data = dic)
+summary(dic_two_way)
+
+pfos_two_way <- aov(delta_RFU ~ Group * Nutrients, data = PFOS)
+summary(pfos_two_way)
+
+quin_two_way <- aov(delta_RFU ~ Group * Nutrients, data = quinone)
+summary(quin_two_way)

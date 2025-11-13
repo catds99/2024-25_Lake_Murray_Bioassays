@@ -209,3 +209,10 @@ summary(carb_nut_ANOVA)
 
 
 #### carb_nut_long_72 %>% kruskal_test(RFU ~ Group)
+
+
+
+
+
+
+
