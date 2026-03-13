@@ -1,6 +1,19 @@
-# 2025-08-18
-# Combined bioassay plots
+---
+title: "Combined Bioassays 2025"
+author: "C Schlenker"
+date: "2026-02-11"
+output:
+  pdf_document: default
+  html_document:
+    df_print: paged
+---
 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, fig.width = 4, fig.height = 2.5)
+```
+
+
+```{r, include = FALSE}
 
 library(tidyverse)
 library(dplyr)
@@ -19,17 +32,19 @@ library(grid)
 
 ############# import data:
 
-Carb_RFU = read_excel("Combined_Bioassays/2025_combinations_master.xlsx", sheet = "Carb_RFU")
+Carb_RFU = read_excel("2025_combinations_master.xlsx", sheet = "Carb_RFU")
 
-Dic_RFU = read_excel("Combined_Bioassays/2025_combinations_master.xlsx", sheet = "Dic_RFU")
+Dic_RFU = read_excel("2025_combinations_master.xlsx", sheet = "Dic_RFU")
 
-PFOS_RFU = read_excel("Combined_Bioassays/2025_combinations_master.xlsx", sheet = "PFOS_RFU")
+PFOS_RFU = read_excel("2025_combinations_master.xlsx", sheet = "PFOS_RFU")
 
-Q_RFU = read_excel("Combined_Bioassays/2025_combinations_master.xlsx", sheet = "Q_RFU")
+Q_RFU = read_excel("2025_combinations_master.xlsx", sheet = "Q_RFU")
 
-combined_RFU = read_excel("Combined_Bioassays/2025-09-23_data_for_combined_figures.xlsx", sheet = "RFU_72h")
+combined_RFU = read_excel("2025-09-23_data_for_combined_figures.xlsx", sheet = "RFU_72h")
+```
 
 
+```{r, include = FALSE}
 ############# rearrange and reformat data:
 
 Carb_RFU$Group <- factor(Carb_RFU$Group,
@@ -52,12 +67,14 @@ Q_RFU$Group <- factor(Q_RFU$Group,
 combined_RFU$Group <- factor(combined_RFU$Group,
                       levels = c("control", "solvent control", "Carblow", "Carbhigh", "Carb+Diclow", "Carb+Dichigh", "Carb+PFOSlow", "Carb+PFOShigh", "Carb+6ppdqlow", "Carb+6ppdqhigh", "nutrients only", "nutrients + solvent", "Carblownutrients", "Carbhighnutrients", "Carb+Diclownutrients", "Carb+Dichighnutrients", "Carb+PFOSlownutrients", "Carb+PFOShighnutrients", "Carb+6ppdqlownutrients", "Carb+6ppdqhighnutrients", "control", "solvent control", "Diclow", "Dichigh", "Dic+Carblow", "Dic+Carbhigh", "Dic+PFOSlow", "Dic+PFOShigh", "Dic+6ppdqlow", "Dic+6ppdqhigh", "nutrients only", "nutrients + solvent", "Diclownutrients", "Dichighnutrients", "Dic+Carblownutrients", "Dic+Carbhighnutrients", "Dic+PFOSlownutrients", "Dic+PFOShighnutrients", "Dic+6ppdqlownutrients", "Dic+6ppdqhighnutrients", "control", "solvent control", "PFOSlow", "PFOShigh", "PFOS+Carblow", "PFOS+Carbhigh", "PFOS+Diclow", "PFOS+Dichigh", "PFOS+6ppdqlow", "PFOS+6ppdqhigh", "nutrients only", "nutrients + solvent", "PFOSlownutrients", "PFOShighnutrients", "PFOS+Carblownutrients", "PFOS+Carbhighnutrients", "PFOS+Diclownutrients", "PFOS+Dichighnutrients", "PFOS+6ppdqlownutrients", "PFOS+6ppdqhighnutrients", "control", "solvent control", "6ppdqlow", "6ppdqhigh", "6ppdq+Carblow", "6ppdq+Carbhigh", "6ppdq+Diclow", "6ppdq+Dichigh", "6ppdq+PFOSlow", "6ppdq+PFOShigh", "nutrients only", "nutrients + solvent", "6ppdqlownutrients", "6ppdqhighnutrients", "6ppdq+Carblownutrients", "6ppdq+Carbhighnutrients", "6ppdq+Diclownutrients", "6ppdq+Dichighnutrients", "6ppdq+PFOSlownutrients", "6ppdq+PFOShighnutrients"),
                       labels = c("Control", "Solvent", "C low", "C high", "C+D low", "C+D high", "C+P low", "C+P high", "C+Q low", "C+Q high", "Nutrients", "Solvent N", "C low N", "C high N", "C+D low N", "C+D high N", "C+P low N", "C+P high N", "C+Q low N", "C+Q high N", "Control", "Solvent", "D low", "D high", "D+C low", "D+C high", "D+P low", "D+P high", "D+Q low", "D+Q high", "Nutrients", "Solvent N", "D low N", "D high N", "D+C low N", "D+C high N", "D+P low N", "D+P high N", "D+Q low N", "D+Q high N", "Control", "Solvent", "Q low", "Q high", "Q+C low", "Q+C high", "Q+D low", "Q+D high", "Q+P low", "Q+P high", "Nutrients", "Solvent N", "Q low N", "Q high N", "Q+C low N", "Q+C high N", "Q+D low N", "Q+D high N", "Q+P low N", "Q+P high N", "Control", "Solvent", "Q low", "Q high", "Q+C low", "Q+C high", "Q+D low", "Q+D high", "Q+P low", "Q+P high", "Nutrients", "Solvent N", "Q low N", "Q high N", "Q+C low N", "Q+C high N", "Q+D low N", "Q+D high N", "Q+P low N", "Q+P high N"))
+```
 
 
+## Boxplots for each bioassay
+
+```{r}
 
 ############# figures:
-
-summary(Dic_RFU)
 
 Carb_box = ggplot() +
   geom_boxplot(aes(x = Group, 
@@ -69,7 +86,7 @@ Carb_box = ggplot() +
   scale_y_continuous(limits = c(1, 12)) +
   theme_classic(base_size = 20) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
-ggsave(Carb_box, filename = "Combined_Bioassays/Figures/end_RFU/Carb_box.png",
+ggsave(Carb_box, filename = "Figures/end_RFU/Carb_box.png",
        device = "png", height = 7, width = 11)
 
 Dic_box = ggplot() +
@@ -82,7 +99,7 @@ Dic_box = ggplot() +
   scale_y_continuous(limits = c(1, 12)) +
   theme_classic(base_size = 20) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
-ggsave(Dic_box, filename = "Combined_Bioassays/Figures/end_RFU/Dic_box.png",
+ggsave(Dic_box, filename = "Figures/end_RFU/Dic_box.png",
        device = "png", height = 7, width = 11)
 
 PFOS_box = ggplot() +
@@ -95,7 +112,7 @@ PFOS_box = ggplot() +
   scale_y_continuous(limits = c(1, 12)) +
   theme_classic(base_size = 20) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
-ggsave(PFOS_box, filename = "Combined_Bioassays/Figures/end_RFU/PFOS_box.png",
+ggsave(PFOS_box, filename = "Figures/end_RFU/PFOS_box.png",
        device = "png", height = 7, width = 11)
 
 Q_box = ggplot() +
@@ -108,40 +125,31 @@ Q_box = ggplot() +
   scale_y_continuous(limits = c(1, 12)) +
   theme_classic(base_size = 20) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
-ggsave(Q_box, filename = "Combined_Bioassays/Figures/end_RFU/Q_box.png",
-       device = "png", height = 7, width = 11)
-
-summary(Q_RFU)
-
-
-combined_RFU_72h = ggarrange(Carb_box + rremove("ylab") + rremove("xlab"), Dic_box + rremove("ylab") + rremove("xlab"), PFOS_box + rremove("ylab") + rremove("xlab"), Q_box + rremove("ylab") + rremove("xlab"),
-                            labels = c("Carb", "Dic", "PFOS", "6ppd-q"),
-                            label.x = 0.1,
-                            label.y = 1,
-                            nrow = 2,
-                            ncol = 2)
-
-
-
-combined_RFU_72h  = annotate_figure(combined_RFU_72h, left = textGrob("Chl a Fluorescence (RFU)", rot = 90, vjust = 1, gp = gpar( cex = 1.3, fontsize = 22.5)),
-                                   bottom = textGrob("Treatment", gp = gpar(cex = 1.3, fontsize = 22.5)))
-
-ggsave(combined_RFU_72h, filename = "Combined_Bioassays/Figures/end_RFU/combined_RFU_72h.png",
+ggsave(Q_box, filename = "Figures/end_RFU/Q_box.png",
        device = "png", height = 7, width = 11)
 
 
 
 combined = ggarrange(Carb_box, Dic_box, PFOS_box, Q_box, 
-                     ncol = 2, nrow = 2, 
-                     labels = c("Carb", "Dic", "PFOS", "6ppd-q")
-                     )
+          ncol = 2, nrow = 2, 
+          labels = c("Carb", "Dic", "PFOS", "6ppd-q"),
+          common.legend = TRUE, 
+          legend = "bottom")
 
 
-############################################################ percent difference barchart
+print(combined)
+```
+
+
+###### Percent Difference from Control (Solvent)
+
+
+```{r}
+
 
 ############# import data:
 
-pd = read_excel("Combined_Bioassays/2025_combinations_master.xlsx", sheet = "all_pd")
+pd = read_excel("2025_combinations_master.xlsx", sheet = "all_pd")
 glimpse(pd)
 
 ############# rearrange and reformat data:
@@ -180,7 +188,7 @@ pd_carb = ggplot() +
   theme_classic(base_size = 15) +
   scale_y_continuous(limits = c(-65, 145)) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
-ggsave(pd_carb, filename = "Combined_Bioassays/Figures/percent_difference_control/pd_carb.png",
+ggsave(pd_carb, filename = "Figures/percent_difference_control/pd_carb.png",
        device = "png", height = 7, width = 11)
 
 pd_dic = ggplot() +
@@ -197,7 +205,7 @@ pd_dic = ggplot() +
   theme_classic(base_size = 15) +
   scale_y_continuous(limits = c(-65, 145)) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
-ggsave(pd_dic, filename = "Combined_Bioassays/Figures/percent_difference_control/pd_dic.png",
+ggsave(pd_dic, filename = "Figures/percent_difference_control/pd_dic.png",
        device = "png", height = 7, width = 11)
 
 pd_PFOS = ggplot() +
@@ -214,7 +222,7 @@ pd_PFOS = ggplot() +
   theme_classic(base_size = 15) +
   scale_y_continuous(limits = c(-65, 145)) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
-ggsave(pd_PFOS, filename = "Combined_Bioassays/Figures/percent_difference_control/pd_PFOS.png",
+ggsave(pd_PFOS, filename = "Figures/percent_difference_control/pd_PFOS.png",
        device = "png", height = 7, width = 11)
 
 pd_Q = ggplot() +
@@ -231,16 +239,25 @@ pd_Q = ggplot() +
   theme_classic(base_size = 15) +
   scale_y_continuous(limits = c(-65, 145)) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
-ggsave(pd_Q, filename = "Combined_Bioassays/Figures/percent_difference_control/pd_Q.png",
+ggsave(pd_Q, filename = "Figures/percent_difference_control/pd_Q.png",
        device = "png", height = 7, width = 11)
 
+pd_carb
+pd_dic
+pd_PFOS
+pd_Q
+
+```
 
 
-############################################################ delta RFU barchart
+##### Change in RFU over 72h
+
+```{r}
+
 
 ############# import data:
 
-delta = read_excel("Combined_Bioassays/2025_combinations_master.xlsx", sheet = "all_delta")
+delta = read_excel("2025_combinations_master.xlsx", sheet = "all_delta")
 
 glimpse(delta)
 summary(delta)
@@ -283,7 +300,7 @@ delta_carb = ggplot() +
   theme_classic(base_size = 20) +
   scale_y_continuous(limits = c(-3.5, 8.5)) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
-ggsave(delta_carb, filename = "Combined_Bioassays/Figures/delta_RFU/delta_carb.png",
+ggsave(delta_carb, filename = "Figures/delta_RFU/delta_carb.png",
        device = "png", height = 7, width = 11)
 
 delta_dic = ggplot() +
@@ -301,7 +318,7 @@ delta_dic = ggplot() +
   theme_classic(base_size = 20) +
   scale_y_continuous(limits = c(-3.5, 8.5)) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
-ggsave(delta_dic, filename = "Combined_Bioassays/Figures/delta_RFU/delta_dic.png",
+ggsave(delta_dic, filename = "Figures/delta_RFU/delta_dic.png",
        device = "png", height = 7, width = 11)
 
 
@@ -320,7 +337,7 @@ delta_PFOS = ggplot() +
   theme_classic(base_size = 20) +
   scale_y_continuous(limits = c(-3.5, 8.5)) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
-ggsave(delta_PFOS, filename = "Combined_Bioassays/Figures/delta_RFU/delta_PFOS.png",
+ggsave(delta_PFOS, filename = "Figures/delta_RFU/delta_PFOS.png",
        device = "png", height = 7, width = 11)
 
 
@@ -339,7 +356,7 @@ delta_Q = ggplot() +
   theme_classic(base_size = 20) +
   scale_y_continuous(limits = c(-3.5, 8.5)) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
-ggsave(delta_Q, filename = "Combined_Bioassays/Figures/delta_RFU/delta_Q.png",
+ggsave(delta_Q, filename = "Figures/delta_RFU/delta_Q.png",
        device = "png", height = 7, width = 11)
 
 
@@ -363,11 +380,23 @@ combined_delta  = annotate_figure(combined_delta, left = textGrob(label = expres
                                     bottom = textGrob("Treatment", gp = gpar(cex = 1.3, fontsize = 18)))
 
 
-############################################################ percent difference barchart based on delta RFU
+delta_carb
+delta_dic
+delta_PFOS
+delta_Q
+
+combined_delta
+```
+
+
+##### Percent Difference in the Change in RFU over 72h
+
+```{r}
+
 
 ############# import data:
 
-pd_delta = read_excel("Combined_Bioassays/2025_combinations_master.xlsx", sheet = "all_pd_delta")
+pd_delta = read_excel("2025_combinations_master.xlsx", sheet = "all_pd_delta")
 glimpse(pd)
 
 ############# rearrange and reformat data:
@@ -406,7 +435,7 @@ pd_delta_carb = ggplot() +
   theme_classic(base_size = 15) +
   scale_y_continuous(limits = c(-400, 300)) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
-ggsave(pd_delta_carb, filename = "Combined_Bioassays/Figures/percent_difference_control_delta/pd_delta_carb.png",
+ggsave(pd_delta_carb, filename = "Figures/percent_difference_control_delta/pd_delta_carb.png",
        device = "png", height = 7, width = 11)
 
 pd_delta_dic = ggplot() +
@@ -423,7 +452,7 @@ pd_delta_dic = ggplot() +
   theme_classic(base_size = 15) +
   scale_y_continuous(limits = c(-400, 300)) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
-ggsave(pd_delta_dic, filename = "Combined_Bioassays/Figures/percent_difference_control_delta/pd_delta_dic.png",
+ggsave(pd_delta_dic, filename = "Figures/percent_difference_control_delta/pd_delta_dic.png",
        device = "png", height = 7, width = 11)
 
 pd_delta_PFOS = ggplot() +
@@ -440,7 +469,7 @@ pd_delta_PFOS = ggplot() +
   theme_classic(base_size = 15) +
   scale_y_continuous(limits = c(-1000, 1000)) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
-ggsave(pd_delta_PFOS, filename = "Combined_Bioassays/Figures/percent_difference_control_delta/pd_delta_PFOS.png",
+ggsave(pd_delta_PFOS, filename = "Figures/percent_difference_control_delta/pd_delta_PFOS.png",
        device = "png", height = 7, width = 11)
 
 pd_delta_Q = ggplot() +
@@ -457,21 +486,31 @@ pd_delta_Q = ggplot() +
   theme_classic(base_size = 15) +
   scale_y_continuous(limits = c(-3000, 1000)) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
-ggsave(pd_delta_Q, filename = "Combined_Bioassays/Figures/percent_difference_control_delta/pd_delta_Q.png",
+ggsave(pd_delta_Q, filename = "Figures/percent_difference_control_delta/pd_delta_Q.png",
        device = "png", height = 7, width = 11)
 
-############################################################ change in RFU line graph
+pd_delta_carb
+pd_delta_dic
+pd_delta_PFOS
+pd_delta_Q
+
+```
+
+
+##### Change in RFU over time
+
+```{r}
 
 
 ############# import data:
 
-Carb_RFU = read_excel("Combined_Bioassays/2025_combinations_master.xlsx", sheet = "Carb_RFU")
+Carb_RFU = read_excel("2025_combinations_master.xlsx", sheet = "Carb_RFU")
 
-Dic_RFU = read_excel("Combined_Bioassays/2025_combinations_master.xlsx", sheet = "Dic_RFU")
+Dic_RFU = read_excel("2025_combinations_master.xlsx", sheet = "Dic_RFU")
 
-PFOS_RFU = read_excel("Combined_Bioassays/2025_combinations_master.xlsx", sheet = "PFOS_RFU")
+PFOS_RFU = read_excel("2025_combinations_master.xlsx", sheet = "PFOS_RFU")
 
-Q_RFU = read_excel("Combined_Bioassays/2025_combinations_master.xlsx", sheet = "Q_RFU")
+Q_RFU = read_excel("2025_combinations_master.xlsx", sheet = "Q_RFU")
 
 
 ############# mean and st dev:
@@ -594,7 +633,7 @@ Dic_change_over_time = ggplot(Dic_change_2, aes(x = Time, y = mean, group = Grou
   guides(color = guide_legend(ncol = 2)) +
   theme(legend.position = "bottom") +
   theme_classic(base_size = 20)
-ggsave(Dic_change_over_time, filename = "Combined_Bioassays/Figures/Change_over_time/Dic_change_over_time.png",
+ggsave(Dic_change_over_time, filename = "Figures/Change_over_time/Dic_change_over_time.png",
        device = "png", height = 7, width = 11)
 
 ###Carbamazepine
@@ -610,7 +649,7 @@ Carb_change_over_time = ggplot(Carb_change_2, aes(x = Time, y = mean, group = Gr
   guides(color = guide_legend(ncol = 2)) +
   theme(legend.position = "bottom") +
   theme_classic(base_size = 20)
-ggsave(Carb_change_over_time, filename = "Combined_Bioassays/Figures/Change_over_time/Carb_change_over_time.png",
+ggsave(Carb_change_over_time, filename = "Figures/Change_over_time/Carb_change_over_time.png",
        device = "png", height = 7, width = 11)
 
 
@@ -627,7 +666,7 @@ PFOS_change_over_time = ggplot(PFOS_change_2, aes(x = Time, y = mean, group = Gr
   guides(color = guide_legend(ncol = 2)) +
   theme(legend.position = "bottom") +
   theme_classic(base_size = 20)
-ggsave(PFOS_change_over_time, filename = "Combined_Bioassays/Figures/Change_over_time/PFOS_change_over_time.png",
+ggsave(PFOS_change_over_time, filename = "Figures/Change_over_time/PFOS_change_over_time.png",
        device = "png", height = 7, width = 11)
 
 
@@ -644,7 +683,7 @@ Q_change_over_time = ggplot(Q_change_2, aes(x = Time, y = mean, group = Group, c
   guides(color = guide_legend(ncol = 2)) +
   theme(legend.position = "bottom") +
   theme_classic(base_size = 20)
-ggsave(Q_change_over_time, filename = "Combined_Bioassays/Figures/Change_over_time/Q_change_over_time.png",
+ggsave(Q_change_over_time, filename = "Figures/Change_over_time/Q_change_over_time.png",
        device = "png", height = 7, width = 11)
 
 
@@ -662,45 +701,44 @@ combined_time  = annotate_figure(combined_time, left = textGrob("Chl a Fluoresce
                                   bottom = textGrob("Time (h)", gp = gpar(cex = 1.3, fontsize = 18)))
 
 
+Carb_change_over_time
+Dic_change_over_time
+PFOS_change_over_time
+Q_change_over_time
 
+combined_time
 
+```
 
+##### Fv/Fm at 72h
 
-############################################################ FvFm @ 72 h boxplot
+```{r}
 
 
 ############# import data:
 
-all_pam = read_excel("Combined_Bioassays/2025_combinations_master.xlsx", sheet = "all_FvFm")
+all_pam = read_excel("2025_combinations_master.xlsx", sheet = "all_FvFm")
 
 glimpse(all_pam)
 
 ############# rearrange and reformat data:
 
-carb_pam = all_pam %>%
-  filter(all_pam$Bioassay == "Carb")
-Dic_pam = all_pam %>%
-  filter(all_pam$Bioassay == "Dic")
-PFOS_pam = all_pam %>%
-  filter(all_pam$Bioassay == "PFOS")
-Quin_pam = all_pam %>%
-  filter(all_pam$Bioassay == "Quin")
 
-carb_pam$Treatment <- factor(carb_pam$Treatment,
+all_pam$Carbamazepine <- factor(all_pam$Carbamazepine,
                                 levels = c("control", "solvent control", "Carblow", "Carbhigh", "Carb+Diclow", "Carb+Dichigh", "Carb+PFOSlow", "Carb+PFOShigh", "Carb+6ppdqlow", "Carb+6ppdqhigh", "nutrient control", "nutrient control (with solvent)", "Carblownutrients", "Carbhighnutrients", "Carb+Diclownutrients", "Carb+Dichighnutrients", "Carb+PFOSlownutrients", "Carb+PFOShighnutrients", "Carb+6ppdqlownutrients", "Carb+6ppdqhighnutrients"),
                                 labels = c("Control", "Solvent Control", "C low", "C high", "C+D low", "C+D high", "C+P low", "C+P high", "C+Q low", "C+Q high", "Nutrients", "Solvent N", "C low N", "C high N", "C+D low N", "C+D high N", "C+P low N", "C+P high N", "C+Q low N", "C+Q high N"))
 
-Dic_pam$Treatment <- factor(Dic_pam$Treatment,
+all_pam$Diclofenac <- factor(all_pam$Diclofenac,
                              levels = c("control", "solvent control", "Diclow", "Dichigh", "Dic+Carblow", "Dic+Carbhigh", "Dic+PFOSlow", "Dic+PFOShigh", "Dic+6ppdqlow", "Dic+6ppdqhigh", "nutrient control", "nutrient control (with solvent)", "Diclownutrients", "Dichighnutrients", "Dic+Carblownutrients", "Dic+Carbhighnutrients", "Dic+PFOSlownutrients", "Dic+PFOShighnutrients", "Dic+6ppdqlownutrients", "Dic+6ppdqhighnutrients"),
                              labels = c("Control", "Solvent", "D low", "D high", "D+C low", "D+C high", "D+P low", "D+P high", "D+Q low", "D+Q high", "Nutrients", "Solvent N", "D low N", "D high N", "D+C low N", "D+C high N", "D+P low N", "D+P high N", "D+Q low N", "D+Q high N"))
 
 
-PFOS_pam$Treatment <- factor(PFOS_pam$Treatment,
-                             levels = c("control", "solvent control", "PFOSlow", "PFOShigh", "PFOS+Carblow", "PFOS+Carbhigh", "PFOS+Diclow", "PFOS+Dichigh", "PFOS+6ppdqlow", "PFOS+6ppdqhigh", "nutrient control", "nutrient control (with solvent)", "PFOSlownutrients", "PFOShighnutrients", "PFOS+Carblownutrients", "PFOS+Carbhighnutrients", "PFOS+Diclownutrients", "PFOS+Dichighnutrients", "PFOS+6ppdqlownutrients", "PFOS+6ppdqhighnutrients"),
+all_pam$PFOS <- factor(all_pam$PFOS,
+                       levels = c("control", "solvent control", "PFOSlow", "PFOShigh", "PFOS+Carblow", "PFOS+Carbhigh", "PFOS+Diclow", "PFOS+Dichigh", "PFOS+6ppdqlow", "PFOS+6ppdqhigh", "nutrient control", "nutrient control (with solvent)", "PFOSlownutrients", "PFOShighnutrients", "PFOS+Carblownutrients", "PFOS+Carbhighnutrients", "PFOS+Diclownutrients", "PFOS+Dichighnutrients", "PFOS+6ppdqlownutrients", "PFOS+6ppdqhighnutrients"),
                        labels = c("Control", "Solvent", "P low", "P high", "P+C low", "P+C high", "P+D low", "P+D high", "P+Q low", "P+Q high", "Nutrients", "Solvent N", "P low N", "P high N", "P+C low N", "P+C high N", "P+D low N", "P+D high N", "P+Q low N", "P+Q high N"))
 
-Quin_pam$Treatment <- factor(Quin_pam$Treatment,
-                             levels = c("control", "solvent control", "6ppdqlow", "6ppdqhigh", "6ppdq+Carblow", "6ppdq+Carbhigh", "6ppdq+Diclow", "6ppdq+Dichigh", "6ppdq+PFOSlow", "6ppdq+PFOShigh", "nutrients only", "nutrients + solvent", "6ppdqlownutrients", "6ppdqhighnutrients", "6ppdq+Carblownutrients", "6ppdq+Carbhighnutrients", "6ppdq+Diclownutrients", "6ppdq+Dichighnutrients", "6ppdq+PFOSlownutrients", "6ppdq+PFOShighnutrients"),
+all_pam$Quinone <- factor(all_pam$Quinone,
+                           levels = c("control", "solvent control", "6ppdqlow", "6ppdqhigh", "6ppdq+Carblow", "6ppdq+Carbhigh", "6ppdq+Diclow", "6ppdq+Dichigh", "6ppdq+PFOSlow", "6ppdq+PFOShigh", "nutrients only", "nutrients + solvent", "6ppdqlownutrients", "6ppdqhighnutrients", "6ppdq+Carblownutrients", "6ppdq+Carbhighnutrients", "6ppdq+Diclownutrients", "6ppdq+Dichighnutrients", "6ppdq+PFOSlownutrients", "6ppdq+PFOShighnutrients"),
                            labels = c("Control", "Solvent", "Q low", "Q high", "Q+C low", "Q+C high", "Q+D low", "Q+D high", "Q+P low", "Q+P high", "Nutrients", "Solvent N", "Q low N", "Q high N", "Q+C low N", "Q+C high N", "Q+D low N", "Q+D high N", "Q+P low N", "Q+P high N"))
 
 ############# figures:
@@ -715,7 +753,7 @@ carb_pam = ggplot() +
   scale_y_continuous(breaks = seq(0.25, 0.7, by = 0.05), limits = c(0.25,0.7)) +
   theme_classic(base_size = 15) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
-ggsave(carb_pam, filename = "Combined_Bioassays/Figures/FvFm/carb_pam.png",
+ggsave(carb_pam, filename = "Figures/FvFm/carb_pam.png",
        device = "png", height = 7, width = 11)
 
 
@@ -729,7 +767,7 @@ dic_pam = ggplot() +
   scale_y_continuous(breaks = seq(0.25, 0.7, by = 0.05), limits = c(0.25,0.7)) +
   theme_classic(base_size = 15) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
-ggsave(dic_pam, filename = "Combined_Bioassays/Figures/FvFm/dic_pam.png",
+ggsave(dic_pam, filename = "Figures/FvFm/dic_pam.png",
        device = "png", height = 7, width = 11)
 
 
@@ -743,7 +781,7 @@ PFOS_pam = ggplot() +
   scale_y_continuous(breaks = seq(0.25, 0.7, by = 0.05), limits = c(0.25,0.7)) +
   theme_classic(base_size = 15) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
-ggsave(PFOS_pam, filename = "Combined_Bioassays/Figures/FvFm/PFOS_pam.png",
+ggsave(PFOS_pam, filename = "Figures/FvFm/PFOS_pam.png",
        device = "png", height = 7, width = 11)
 
 Q_pam = ggplot() +
@@ -756,6 +794,12 @@ Q_pam = ggplot() +
   scale_y_continuous(breaks = seq(0.25, 0.7, by = 0.05), limits = c(0.25,0.7)) +
   theme_classic(base_size = 15) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
-ggsave(Q_pam, filename = "Combined_Bioassays/Figures/FvFm/Q_pam.png",
+ggsave(Q_pam, filename = "Figures/FvFm/Q_pam.png",
        device = "png", height = 7, width = 11)
 
+carb_pam
+dic_pam
+PFOS_pam
+Q_pam
+
+```

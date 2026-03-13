@@ -1,0 +1,9 @@
+# A tibble: 6 × 6
+  Bioassay      Nutrients   df1   df2 statistic     p
+  <fct>         <chr>     <int> <int>     <dbl> <dbl>
+1 Carbamazepine no            9    30     0.959 0.492
+2 Carbamazepine yes           9    30     0.336 0.956
+3 PFOS          no            9    30     1.01  0.452
+4 PFOS          yes           9    30     1.04  0.432
+5 6ppd-q        no            9    30     0.834 0.591
+6 6ppd-q        yes           9    30     1.32  0.267

@@ -31,17 +31,23 @@ carb_no_nut = data %>%
   filter(Bioassay == "1") %>%
   filter(Nutrients == "no") 
 
-carb_no_nut %>%
+sum_carb_no_nut = carb_no_nut %>%
   group_by(Group) %>%
   get_summary_stats(`72h`, type = "mean_sd")
+
+carb_no_nut_df <- as.data.frame(sum_carb_no_nut)
+
 
 carb_nut = data %>%
   filter(Bioassay == "1") %>%
   filter(Nutrients == "yes") 
 
-carb_nut %>%
+sum_carb_nut = carb_nut %>%
   group_by(Group) %>%
   get_summary_stats(`72h`, type = "mean_sd")
+
+carb_nut_df <- as.data.frame(sum_carb_nut)
+
 
 
 ######## Normality checks
@@ -93,6 +99,7 @@ carb_nut_long_72 %>% levene_test(RFU ~ Group) # p > 0.05 = passes
 carb_no_nut_ANOVA <- aov(RFU ~ Group, data = carb_no_nut_long_72)
 summary(carb_no_nut_ANOVA)
 
+
 TukeyHSD(carb_no_nut_ANOVA, "Group")
 carb_no_nut_REGW = REGW.test(carb_no_nut_ANOVA, "Group", DFerror, MSerror, alpha = 0.05, group=FALSE)
 print(carb_no_nut_REGW)
@@ -132,17 +139,22 @@ dic_no_nut = data %>%
   filter(Bioassay == "2") %>%
   filter(Nutrients == "no") 
 
-dic_no_nut %>%
+sum_dic_no_nut = dic_no_nut %>%
   group_by(Group) %>%
   get_summary_stats(`72h`, type = "mean_sd")
+
+dic_no_nut_df <- as.data.frame(sum_dic_no_nut)
+
 
 dic_nut = data %>%
   filter(Bioassay == "2") %>%
   filter(Nutrients == "yes") 
 
-dic_nut %>%
+sum_dic_nut = dic_nut %>%
   group_by(Group) %>%
   get_summary_stats(`72h`, type = "mean_sd")
+
+dic_nut_df <- as.data.frame(sum_dic_nut)
 
 
 ######## Normality checks
@@ -194,7 +206,10 @@ dic_nut_long_72 %>% levene_test(RFU ~ Group) # p > 0.05 = passes
 dic_no_nut_ANOVA <- aov(RFU ~ Group, data = dic_no_nut_long_72)
 summary(dic_no_nut_ANOVA)
 
-TukeyHSD(dic_no_nut_ANOVA, "Group")
+dic_tukey_1 = TukeyHSD(dic_no_nut_ANOVA, "Group")
+dic_tukey_1_df <- as.data.frame(dic_tukey_1$Group)
+print(dic_tukey_1_df)
+
 dic_no_nut_REGW = REGW.test(dic_no_nut_ANOVA, "Group", DFerror, MSerror, alpha = 0.05, group=FALSE)
 print(dic_no_nut_REGW)
 
@@ -208,7 +223,11 @@ print(wilcox_dic_no_nut, n=45)
 dic_nut_ANOVA <- aov(RFU ~ Group, data = dic_nut_long_72)
 summary(dic_nut_ANOVA)
 
-TukeyHSD(dic_nut_ANOVA, "Group")
+dic_tukey_2 = TukeyHSD(dic_nut_ANOVA, "Group")
+dic_tukey_2_df <- as.data.frame(dic_tukey_2$Group)
+print(dic_tukey_2_df)
+
+
 dic_nut_REGW = REGW.test(dic_nut_ANOVA, "Group", DFerror, MSerror, alpha = 0.05, group=FALSE)
 print(dic_nut_REGW)
 
