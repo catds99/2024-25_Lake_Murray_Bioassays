@@ -1,0 +1,80 @@
+
+	Shapiro-Wilk normality test
+
+data:  res
+W = 0.9299, p-value = 0.01599
+
+
+	Shapiro-Wilk normality test
+
+data:  res2
+W = 0.99276, p-value = 0.9958
+
+
+	Shapiro-Wilk normality test
+
+data:  res7
+W = 0.9689, p-value = 0.3319
+
+
+	Shapiro-Wilk normality test
+
+data:  res8
+W = 0.9852, p-value = 0.8703
+
+
+	Shapiro-Wilk normality test
+
+data:  res3
+W = 0.92098, p-value = 0.008266
+
+
+	Shapiro-Wilk normality test
+
+data:  res4
+W = 0.9791, p-value = 0.6561
+
+
+	Shapiro-Wilk normality test
+
+data:  res5
+W = 0.95856, p-value = 0.1496
+
+
+	Shapiro-Wilk normality test
+
+data:  res6
+W = 0.95083, p-value = 0.08099
+
+Levene's Test for Homogeneity of Variance (center = median)
+      Df F value Pr(>F)
+group  9  0.9586  0.492
+      30               
+Levene's Test for Homogeneity of Variance (center = median)
+      Df F value Pr(>F)
+group  9  0.3356 0.9558
+      30               
+Levene's Test for Homogeneity of Variance (center = median)
+      Df F value Pr(>F)
+group  9  0.6473  0.748
+      30               
+Levene's Test for Homogeneity of Variance (center = median)
+      Df F value Pr(>F)
+group  9  0.6073 0.7808
+      30               
+Levene's Test for Homogeneity of Variance (center = median)
+      Df F value Pr(>F)
+group  9  1.0124 0.4523
+      30               
+Levene's Test for Homogeneity of Variance (center = median)
+      Df F value Pr(>F)
+group  9  1.0413 0.4318
+      30               
+Levene's Test for Homogeneity of Variance (center = median)
+      Df F value Pr(>F)
+group  9   0.834 0.5909
+      30               
+Levene's Test for Homogeneity of Variance (center = median)
+      Df F value Pr(>F)
+group  9  1.3214 0.2675
+      30               

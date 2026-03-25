@@ -17,6 +17,7 @@ abs_data = read_excel("Combined_Bioassays/2026-03-04_master_data_values_only.xls
 pd_data = read_excel("Combined_Bioassays/2026-03-04_master_data_values_only.xlsx", sheet = "pd")
 glimpse(pd_data)
 glimpse(abs_data)
+summary(abs_data)
 
 ### reformat data:
 
@@ -55,7 +56,7 @@ biomass_box = ggplot() +
   facet_wrap(~Bioassay, scales = "free")+
   xlab("Treatment") +
   ylab(expression("Total Biomass (μg Chl " *italic(a)* " L"^-1*")")) +
-  scale_y_continuous(limits = c(1, 12)) +
+  scale_y_continuous(limits = c(1, 23)) +
   theme_classic(base_size = 15) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
@@ -75,6 +76,20 @@ RFU_box = ggplot() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
 
+### boxplot based on biomass:
+
+biomass_box = ggplot() +
+  geom_boxplot(aes(x = Treatment, 
+                   y = B2_72,
+                   fill = Nutrients),
+               data = abs_data) +
+  scale_fill_manual(values = c("lightblue", "darkgreen"))+
+  facet_wrap(~Bioassay, scales = "free")+
+  xlab("Treatment") +
+  ylab(expression("Total Biomass (μg Chl " *italic(a)* " L"^-1*")")) +
+  scale_y_continuous(limits = c(1, 17)) +
+  theme_classic(base_size = 15) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
 
 ### bar graph based on change in biomass over 72 h:
@@ -99,7 +114,7 @@ delta_biomass = ggplot(aes(x = Treatment,
   facet_wrap(~Bioassay, scales = "free")+
   xlab("Treatment") +
   ylab(expression("Change in Total Biomass (μg Chl " *italic(a)* " L"^-1*") over 72h")) +
-  theme_classic(base_size = 15) +
+v  theme_classic(base_size = 15) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
 
@@ -124,7 +139,33 @@ delta_RFU = ggplot(aes(x = Treatment,
   scale_fill_manual(values = c("lightblue", "darkgreen"))+
   facet_wrap(~Bioassay, scales = "free")+
   xlab("Treatment") +
-  ylab(expression("Change in Chl " *italic(a)* " Fluorescence (RFU)")) +
+  ylab(expression("Change in Chl " *italic(a)* " Fluorescence (RFU) over 72 h")) +
+  scale_y_continuous(limits = c(-2, 8.5)) +
+  theme_classic(base_size = 15) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+### bar graph based on change in biomass over 72h (grouped standard curve):
+
+B_delta_mean <- abs_data %>%
+  group_by(Bioassay, Treatment, Nutrients) %>%
+  summarize(mean_delta_B = mean(B_delta),
+            sd_delta_B = sd(B_delta))
+
+
+delta_biomass = ggplot(aes(x = Treatment, 
+                           y = mean_delta_B,
+                           fill = Nutrients),
+                       data = B_delta_mean) +
+  geom_col(aes(x = Treatment, 
+               y = mean_delta_B,
+               fill = Nutrients),
+           data = B_delta_mean) +
+  geom_errorbar(aes(ymin = mean_delta_B - sd_delta_B, 
+                    ymax = mean_delta_B + sd_delta_B), width = 0.2) +
+  scale_fill_manual(values = c("lightblue", "darkgreen"))+
+  facet_wrap(~Bioassay, scales = "free")+
+  xlab("Treatment") +
+  ylab(expression("Change in Total Biomass (μg Chl " *italic(a)* " L"^-1*") over 72h")) +
   theme_classic(base_size = 15) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
@@ -158,6 +199,7 @@ pd_biomass = ggplot(aes(x = Treatment,
   facet_wrap(~Bioassay, scales = "free")+
   xlab("Treatment") +
   ylab(expression("Percent Difference in Total Biomass (μg Chl " *italic(a)* " L"^-1*") Relative to Solvent Control")) +
+  scale_y_continuous(limits = c(-60, 155)) +
   theme_classic(base_size = 15) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
@@ -216,6 +258,7 @@ pd_biomass_c = ggplot(aes(x = Treatment,
   facet_wrap(~Bioassay, scales = "free")+
   xlab("Treatment") +
   ylab(expression("Percent Difference in Total Biomass (μg Chl " *italic(a)* " L"^-1*") Relative to  Control")) +
+  scale_y_continuous(limits = c(-65, 100)) +
   theme_classic(base_size = 15) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
@@ -279,7 +322,7 @@ print(levene, n = 60)
 
 capture.output(print(levene), file = "levene_table.doc")
 
-
+capture.output(print(shapiro, n=80),print(levene), file = "raw_data_assumptions_biomass.doc")
 
 ############################ ANOVAs
 
@@ -359,6 +402,22 @@ summary(dic_nut_ANOVA)
 dic_nut_Tukey = TukeyHSD(dic_nut_ANOVA, "Treatment")
 print(dic_nut_Tukey)
 
+# Assumptions based on residuals 
+
+res7 <- residuals(dic_no_nut_ANOVA)
+shapiro.test(res7)
+plot(dic_no_nut_ANOVA, which = 2) ########### not normal
+
+levene7 = leveneTest(dic_no_nut_ANOVA)
+
+
+res8 <- residuals(dic_nut_ANOVA)
+shapiro.test(res8)
+plot(dic_nut_ANOVA, which = 2) ############ normal
+
+levene8 = leveneTest(dic_nut_ANOVA)
+
+
 
 ## PFOS ##
 
@@ -431,10 +490,10 @@ levene6 = leveneTest(quin_nut_ANOVA)
 ## Print output to word doc:
 
 # ANOVAs
-capture.output(summary(carb_no_nut_ANOVA), print(carb_no_nut_Tukey), summary(carb_nut_ANOVA), print(carb_nut_Tukey), summary(pfos_no_nut_ANOVA), print(pfos_no_nut_Tukey), summary(pfos_nut_ANOVA), print(pfos_nut_Tukey),  summary(quin_no_nut_ANOVA), print(quin_no_nut_Tukey), summary(quin_nut_ANOVA), print(quin_nut_Tukey),  file = "anova_table.doc")
+capture.output(summary(carb_no_nut_ANOVA), print(carb_no_nut_Tukey), summary(carb_nut_ANOVA), print(carb_nut_Tukey), summary(dic_no_nut_ANOVA), print(dic_no_nut_Tukey), summary(dic_nut_ANOVA), print(dic_nut_Tukey), summary(pfos_no_nut_ANOVA), print(pfos_no_nut_Tukey), summary(pfos_nut_ANOVA), print(pfos_nut_Tukey),  summary(quin_no_nut_ANOVA), print(quin_no_nut_Tukey), summary(quin_nut_ANOVA), print(quin_nut_Tukey),  file = "all_anova_table.doc")
 
 # Assumptions based on residuals
-capture.output(print(shapiro.test(res)), print(shapiro.test(res2)), print(shapiro.test(res3)), print(shapiro.test(res4)), print(shapiro.test(res5)), print(shapiro.test(res6)), print(levene1), print(levene2), print(levene3), print(levene4), print(levene5), print(levene6),  file = "res_assumptions.doc")
+capture.output(print(shapiro.test(res)), print(shapiro.test(res2)), print(shapiro.test(res7)), print(shapiro.test(res8)), print(shapiro.test(res3)), print(shapiro.test(res4)), print(shapiro.test(res5)), print(shapiro.test(res6)), print(levene1), print(levene2), print(levene7), print(levene8), print(levene3), print(levene4), print(levene5), print(levene6),  file = "all_res_assumptions.doc")
 
 
 
@@ -455,7 +514,7 @@ pfos = abs_data %>%
 glimpse(pfos)
 
 quin = abs_data %>%
-  filter(Bioassay == "Quinone")
+  filter(Bioassay == "6ppd-q")
 glimpse(quin)
 
 
@@ -491,13 +550,46 @@ qqnorm(resids)
 qqline(resids, col = "red")
 shapiro.test(resid(carb_2way))
 
+## Diclofenac ##
+
+# ANOVA
+
+dic_2way = aov(B_72 ~ Treatment2 * Nutrients, data = dic)
+summary(dic_2way) # significant interaction
+
+dic_2wayb = aov(B_72 ~ Treatment2 + Nutrients, data = dic)
+summary(dic_2wayb)
+
+# Interaction plot
+interaction.plot(x.factor = dic$Treatment2, 
+                 trace.factor = dic$Nutrients, 
+                 response = dic$B_72, 
+                 type = "b", 
+                 col = c("red", "blue"), 
+                 pch = c(19, 17), 
+                 fixed = TRUE,
+                 xlab = "Treatment", 
+                 ylab = "Mean B_72", 
+                 main = "Interaction Plot")
+
+
+# Assumptions based on residuals
+levene_dic_2way = leveneTest(B_72 ~ Treatment2 * Nutrients, data = dic)
+
+resids4 <- resid(dic_2way)
+shapiro.test(resids4)
+qqnorm(resids4)
+qqline(resids4, col = "red")
+shapiro.test(resid(dic_2way))
+
+
 
 ## PFOS ##
 
 # ANOVA
 
 pfos_2way = aov(B_72 ~ Treatment2 * Nutrients, data = pfos)
-summary(pfos_2way) # significant interaction, so on to additive
+summary(pfos_2way) # significant interaction
 
 
 # Interaction plot
@@ -558,7 +650,7 @@ shapiro.test(resid(quin_2way))
 
 
 
-capture.output(summary(carb_2way), print(levene_carb_2way), print(shapiro.test(resid(carb_2way))), summary(pfos_2way), print(levene_pfos_2way), print(shapiro.test(resid(pfos_2way))), summary(quin_2way), print(levene_quin_2way), print(shapiro.test(resid(quin_2way))),  file = "two-way anovas.doc")
+capture.output(summary(carb_2way), summary(carb_2wayb), print(levene_carb_2way), print(shapiro.test(resid(carb_2way))), summary(dic_2way), summary(dic_2wayb), print(levene_dic_2way), print(shapiro.test(resid(dic_2way))), summary(pfos_2way), print(levene_pfos_2way), print(shapiro.test(resid(pfos_2way))), summary(quin_2way), print(levene_quin_2way), print(shapiro.test(resid(quin_2way))),  file = "two-way anovas.doc")
 
 
 

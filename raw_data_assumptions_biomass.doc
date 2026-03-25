@@ -1,0 +1,94 @@
+# A tibble: 80 × 5
+   Bioassay      Treatment                variable statistic       p
+   <fct>         <fct>                    <chr>        <dbl>   <dbl>
+ 1 Carbamazepine Control                  B_72         0.894 0.404  
+ 2 Carbamazepine Solvent Control          B_72         0.968 0.831  
+ 3 Carbamazepine Nutrient Control         B_72         0.984 0.924  
+ 4 Carbamazepine Nutrient-Solvent Control B_72         0.965 0.813  
+ 5 Carbamazepine C low                    B_72         0.885 0.359  
+ 6 Carbamazepine C high                   B_72         0.915 0.507  
+ 7 Carbamazepine C+D low                  B_72         0.797 0.0977 
+ 8 Carbamazepine C+D high                 B_72         0.902 0.442  
+ 9 Carbamazepine C+P low                  B_72         0.915 0.512  
+10 Carbamazepine C+P high                 B_72         0.995 0.983  
+11 Carbamazepine C+Q low                  B_72         0.907 0.469  
+12 Carbamazepine C+Q high                 B_72         0.829 0.165  
+13 Carbamazepine C low N                  B_72         0.967 0.823  
+14 Carbamazepine C high N                 B_72         0.808 0.118  
+15 Carbamazepine C+D low N                B_72         0.911 0.486  
+16 Carbamazepine C+D high N               B_72         0.898 0.423  
+17 Carbamazepine C+P low N                B_72         0.888 0.372  
+18 Carbamazepine C+P high N               B_72         0.994 0.977  
+19 Carbamazepine C+Q low N                B_72         0.745 0.0347 
+20 Carbamazepine C+Q high N               B_72         0.946 0.694  
+21 Diclofenac    Control                  B_72         0.913 0.497  
+22 Diclofenac    Solvent Control          B_72         0.796 0.0957 
+23 Diclofenac    Nutrient Control         B_72         0.933 0.613  
+24 Diclofenac    Nutrient-Solvent Control B_72         0.926 0.570  
+25 Diclofenac    D low                    B_72         0.941 0.660  
+26 Diclofenac    D high                   B_72         0.756 0.0443 
+27 Diclofenac    D+C low                  B_72         0.884 0.358  
+28 Diclofenac    D+C high                 B_72         0.909 0.478  
+29 Diclofenac    D+P low                  B_72         0.871 0.300  
+30 Diclofenac    D+P high                 B_72         0.949 0.712  
+31 Diclofenac    D+Q low                  B_72         0.914 0.503  
+32 Diclofenac    D+Q high                 B_72         0.936 0.632  
+33 Diclofenac    D low N                  B_72         0.912 0.492  
+34 Diclofenac    D high N                 B_72         0.988 0.949  
+35 Diclofenac    D+C low N                B_72         0.849 0.223  
+36 Diclofenac    D+C high N               B_72         0.965 0.809  
+37 Diclofenac    D+P low N                B_72         0.977 0.886  
+38 Diclofenac    D+P high N               B_72         0.987 0.940  
+39 Diclofenac    D+Q low N                B_72         0.933 0.610  
+40 Diclofenac    D+Q high N               B_72         0.847 0.218  
+41 PFOS          Control                  B_72         0.878 0.332  
+42 PFOS          Solvent Control          B_72         0.927 0.579  
+43 PFOS          Nutrient Control         B_72         0.852 0.233  
+44 PFOS          Nutrient-Solvent Control B_72         0.880 0.338  
+45 PFOS          P low                    B_72         0.782 0.0740 
+46 PFOS          P high                   B_72         0.877 0.326  
+47 PFOS          P+C low                  B_72         0.977 0.882  
+48 PFOS          P+C high                 B_72         0.835 0.183  
+49 PFOS          P+D low                  B_72         0.941 0.659  
+50 PFOS          P+D high                 B_72         0.988 0.945  
+51 PFOS          P+Q low                  B_72         0.909 0.478  
+52 PFOS          P+Q high                 B_72         0.967 0.820  
+53 PFOS          P low N                  B_72         0.999 0.997  
+54 PFOS          P high N                 B_72         0.981 0.910  
+55 PFOS          P+C low N                B_72         0.887 0.370  
+56 PFOS          P+C high N               B_72         0.996 0.986  
+57 PFOS          P+D low N                B_72         0.930 0.595  
+58 PFOS          P+D high N               B_72         0.963 0.799  
+59 PFOS          P+Q low N                B_72         0.986 0.939  
+60 PFOS          P+Q high N               B_72         0.906 0.460  
+61 6ppd-q        Control                  B_72         0.949 0.707  
+62 6ppd-q        Solvent Control          B_72         0.692 0.00941
+63 6ppd-q        Nutrient Control         B_72         0.891 0.390  
+64 6ppd-q        Nutrient-Solvent Control B_72         0.974 0.867  
+65 6ppd-q        Q low                    B_72         0.782 0.0736 
+66 6ppd-q        Q high                   B_72         0.774 0.0635 
+67 6ppd-q        Q+C low                  B_72         0.839 0.192  
+68 6ppd-q        Q+C high                 B_72         0.970 0.839  
+69 6ppd-q        Q+D low                  B_72         0.871 0.302  
+70 6ppd-q        Q+D high                 B_72         0.906 0.460  
+71 6ppd-q        Q+P low                  B_72         0.960 0.782  
+72 6ppd-q        Q+P high                 B_72         0.728 0.0236 
+73 6ppd-q        Q low N                  B_72         0.935 0.624  
+74 6ppd-q        Q high N                 B_72         0.890 0.383  
+75 6ppd-q        Q+C low N                B_72         0.954 0.740  
+76 6ppd-q        Q+C high N               B_72         0.914 0.504  
+77 6ppd-q        Q+D low N                B_72         0.962 0.792  
+78 6ppd-q        Q+D high N               B_72         0.985 0.930  
+79 6ppd-q        Q+P low N                B_72         0.973 0.860  
+80 6ppd-q        Q+P high N               B_72         0.890 0.385  
+# A tibble: 8 × 6
+  Bioassay      Nutrients   df1   df2 statistic     p
+  <fct>         <chr>     <int> <int>     <dbl> <dbl>
+1 Carbamazepine no            9    30     0.959 0.492
+2 Carbamazepine yes           9    30     0.336 0.956
+3 Diclofenac    no            9    30     0.647 0.748
+4 Diclofenac    yes           9    30     0.607 0.781
+5 PFOS          no            9    30     1.01  0.452
+6 PFOS          yes           9    30     1.04  0.432
+7 6ppd-q        no            9    30     0.834 0.591
+8 6ppd-q        yes           9    30     1.32  0.267
